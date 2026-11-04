@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>অসম্ভব পছন্দ – Impossible Choice</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff7e6;--card:#fff;--ink:#2b1d3a;--mute:#7a6a8a;--a:#ff6b6b;--b:#4d96ff;--accent:#ffb800;--line:#f0e2c4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1530;--card:#2a2042;--ink:#f6efff;--mute:#b4a6cc;--line:#3d3160}}
+:root[data-theme="dark"]{--bg:#1d1530;--card:#2a2042;--ink:#f6efff;--mute:#b4a6cc;--line:#3d3160}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hind Siliguri','Noto Sans Bengali','Kalpurush',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+.wrap{max-width:640px;margin:0 auto;padding:14px}
+h1{margin:6px 0 2px;font-size:30px;text-align:center}
+.sub{text-align:center;color:var(--mute);margin:0 0 12px}
+.stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.pill{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:4px 14px;font-weight:600}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+nav button{flex:none;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;padding:8px 14px;border-radius:12px;cursor:pointer}
+nav button.on{background:var(--accent);color:#2b1d3a;border-color:var(--accent)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+.q{text-align:center;font-size:19px;font-weight:700;margin:0 0 12px}
+.opts{display:grid;gap:10px}
+.opt{border:0;border-radius:18px;padding:18px 12px;font:inherit;font-size:18px;font-weight:700;color:#fff;cursor:pointer;transition:transform .15s}
+.opt:hover{transform:scale(1.03)}.opt:active{transform:scale(.96)}
+.opt .e{display:block;font-size:44px;margin-bottom:4px}
+.oa{background:var(--a)}.ob{background:var(--b)}
+.or{text-align:center;font-weight:700;color:var(--mute)}
+.res{margin-top:12px;border-radius:16px;background:var(--bg);padding:14px;text-align:center;border:2px dashed var(--accent)}
+.res p{margin:6px 0;font-size:17px}
+.big{font-size:56px;line-height:1.1}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;justify-content:center}
+.btn{border:0;border-radius:12px;padding:10px 16px;background:var(--accent);color:#2b1d3a;font:inherit;font-weight:700;cursor:pointer}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.5}
+input,textarea{width:100%;font:inherit;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin:4px 0}
+.bar{height:26px;border-radius:99px;background:var(--line);overflow:hidden;display:flex;margin:6px 0}
+.bar i{display:block;height:100%;color:#fff;font-style:normal;font-size:13px;line-height:26px;text-align:center;transition:width .5s}
+.bar .ba{background:var(--a)}.bar .bb{background:var(--b)}
+.lb{display:flex;justify-content:space-between;padding:8px 4px;border-bottom:1px solid var(--line)}
+.lb.me{font-weight:700;color:var(--a)}
+.small{color:var(--mute);font-size:14px}
+.hide{display:none}
+/* animations */
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-14px) rotate(-3deg)}40%{transform:translateX(14px) rotate(3deg)}60%{transform:translateX(-10px)}80%{transform:translateX(10px)}}
+@keyframes spin{to{transform:rotate(720deg) scale(1)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-40px)}60%{transform:translateY(0)}80%{transform:translateY(-15px)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg) scale(1.1)}75%{transform:rotate(12deg) scale(1.1)}}
+@keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.an-shake{animation:shake .7s}.an-spin{animation:spin .9s}.an-bounce{animation:bounce .9s}.an-wobble{animation:wobble .8s 2}
+.pop{animation:pop .5s}
+.rain{position:fixed;top:-60px;font-size:34px;pointer-events:none;z-index:50;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🤪 অসম্ভব পছন্দ</h1>
+  <p class="sub">Impossible Choice – দুটোর একটা বাছো, পরিণতি সামলাও!</p>
+  <div class="stats">
+    <span class="pill">😂 স্কোর: <b id="sc">0</b></span>
+    <span class="pill">🎯 খেলা: <b id="pl">0</b></span>
+    <span class="pill">🔥 ধারা: <b id="st">0</b></span>
+  </div>
+  <nav id="nav">
+    <button data-t="play" class="on">🎮 খেলা</button>
+    <button data-t="daily">📅 দৈনিক</button>
+    <button data-t="mine">✍️ নিজের প্রশ্ন</button>
+    <button data-t="vote">🗳️ ভোট</button>
+    <button data-t="board">🏆 লিডারবোর্ড</button>
+  </nav>
+
+  <section id="t-play"></section>
+  <section id="t-daily" class="hide"></section>
+
+  <section id="t-mine" class="hide">
+    <div class="card">
+      <p class="q">নিজের অসম্ভব প্রশ্ন বানাও ✍️</p>
+      <input id="ma" placeholder="অপশন ১ (যেমন: সারাজীবন মুরগির মতো হাঁটবে)" maxlength="80">
+      <input id="mb" placeholder="অপশন ২ (যেমন: বানরের মতো কথা বলবে)" maxlength="80">
+      <div class="row">
+        <button class="btn" id="mplay">▶️ খেলো</button>
+        <button class="btn alt" id="mpub">📢 সবার জন্য দাও</button>
+      </div>
+      <p class="small" id="mmsg"></p>
+    </div>
+  </section>
+
+  <section id="t-vote" class="hide"><div id="votebox"></div></section>
+
+  <section id="t-board" class="hide">
+    <div class="card">
+      <p class="q">🏆 সেরা হাসির রাজা</p>
+      <label class="small">তোমার নাম</label>
+      <input id="nm" placeholder="নাম লেখো" maxlength="20">
+      <div id="lbox" class="small">লোড হচ্ছে…</div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- প্রশ্নভাণ্ডার ---------- */
+const BANK=[
+["সারাজীবন মুরগির মতো হাঁটবে","🐔","বানরের মতো কথা বলবে","🐒","তুমি অফিসে ঢুকলে সবাই ‘কক কক’ বলে অভ্যর্থনা জানাল। বস প্রমোশন দিলেন, শর্ত একটাই: মিটিংয়ে ডিম পাড়তে হবে!","বিয়ের অনুষ্ঠানে তুমি ‘উ উ আ আ’ করে বক্তৃতা দিলে। সবাই ভাবল এটা নতুন কবিতা, এখন তুমি আধুনিক কবি!"],
+["এক মাস মোবাইল ছাড়া থাকবে","📵","এক মাস ইন্টারনেট ছাড়া থাকবে","🌐","মোবাইল ছাড়া তুমি রাস্তা চিনতে পারলে না, শেষে এক চাচার সাথে হেঁটে তার নাতির বিয়েতে পৌঁছে গেলে!","ইন্টারনেট ছাড়া মোবাইল শুধু একটা চকচকে ইট। তুমি ইটটাকে ফেসবুক ভেবে ‘লাইক’ দিতে শুরু করলে!"],
+["প্রতিদিন ১০০টি কলা খাবে","🍌","প্রতিদিন ১০০টি ডিম খাবে","🥚","পাড়ার সব বানর তোমাকে নেতা বানাল। কিন্তু তোমার ছায়া দেখলেই কলাগাছ লজ্জায় মাথা নিচু করে!","তুমি এত ডিম খেলে যে হঠাৎ কক্‌কক্‌ করে ডাকতে শুরু করলে। মুরগিরা বলল, ‘ভাই, আমাদের সংগঠনে যোগ দাও!’"],
+["হাঁচি দিলেই গান গাইবে","🤧","হাসলেই নাচবে","💃","ঠান্ডার দিনে তোমার কনসার্ট হিট! লোকে টিকিট কিনে তোমার সর্দি দেখতে আসছে।","জোকস শুনে হেসে ফেলতেই তুমি ব্রেকডান্স শুরু করলে। এখন সবাই তোমাকে হাসাতে চায়, তুমি ক্লান্ত তবু সুপারস্টার!"],
+["সারাজীবন উল্টো হাঁটবে","🦀","সারাজীবন ভাত ছাড়া থাকবে","🍚","উল্টো হাঁটতে গিয়ে তুমি বিয়েবাড়িতে ঢুকে ভুল বর হয়ে গেলে। এখন শ্বশুরবাড়ি থেকে ফেরার পথও উল্টো!","ভাত ছাড়া তুমি আলুভর্তা দেখেই কাঁদতে শুরু করলে। আলু বলল, ‘আমি তো আছি!’ তুমি বললে, ‘ভাত ছাড়া তুই শুধু আলু!’"],
+["প্রতিদিন গোসলে ঠান্ডা সরবত ঢালবে","🥤","প্রতিদিন ঘুমানোর আগে ব্যাঙের সাথে গল্প করবে","🐸","মশা, পিঁপড়া সব তোমার পেছনে ছুটছে। তুমি এখন চলমান মিষ্টির দোকান!","ব্যাঙ তোমাকে এমন গল্প শোনাল যে সকালে তুমি ‘ঘ্যাঙর ঘ্যাঙ’ করে অ্যালার্ম বন্ধ করলে। বৃষ্টি এল, তুমি ভিআইপি!"],
+["মিটিংয়ে সবসময় সত্যি বলবে","🤥","পরীক্ষায় সবসময় মিথ্যা বলবে","🙊","বস জিজ্ঞেস করলেন, ‘আমার প্রেজেন্টেশন কেমন?’ তুমি বললে, ‘ঘুমের ওষুধের চেয়ে ভালো!’ এখন তুমি অফিসের কমেডিয়ান!","শিক্ষক জিজ্ঞেস করলেন, ‘২+২ কত?’ তুমি আত্মবিশ্বাসে বললে, ‘মাছের তেল!’ আশ্চর্য, নম্বর ফুল!"],
+["মাথায় সবসময় একটা হাঁস বসে থাকবে","🦆","পায়ে সবসময় রঙিন মোজা পরে থাকবে (ডান-বাম আলাদা)","🧦","হাঁস প্যাঁক প্যাঁক করে তোমার সব গোপন কথা ফাঁস করে দিচ্ছে। এখন তুমি ‘হাঁসওয়ালা’ নামে বিখ্যাত!","দোকানে গিয়ে বললে, ‘আরেকটা বাম পা দিন।’ দোকানদার বলল, ‘ভাই, আপনি তো ফ্যাশন-ট্রেন্ড!’"]
+];
+const EM=["🎉","😂","🤣","💥","🎈","🍌","🐔","🤪","⭐"];
+const ANIMS=["an-shake","an-spin","an-bounce","an-wobble"];
+const $=s=>document.querySelector(s);
+const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const qid=(a,b)=>{let h=0;for(const c of a+'|'+b)h=(h*31+c.charCodeAt(0))|0;return 'q'+(h>>>0).toString(36)};
+
+let S=ld('ic_state',{score:0,played:0,streak:0,name:'',lastDay:'',daily:''});
+let cur=null,sample=null,db=null,uid=null,bankIdx=Math.floor(Math.random()*BANK.length);
+let myDoc={name:'',choices:{},custom:[]},allVotes=[],allScores=[],seen=[];
+const save=()=>{sv('ic_state',S);$('#sc').textContent=S.score;$('#pl').textContent=S.played;$('#st').textContent=S.streak};
+
+/* ---------- ট্যাব ---------- */
+$('#nav').onclick=e=>{const t=e.target.dataset.t;if(!t)return;
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b===e.target));
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hide'));
+  $('#t-'+t).classList.remove('hide');
+  if(t==='daily')renderDaily();if(t==='vote')renderVote();if(t==='board')renderBoard();};
+
+/* ---------- প্রশ্ন তৈরি ---------- */
+function fromBank(){const r=BANK[bankIdx%BANK.length];bankIdx++;return{a:r[0],ea:r[1],b:r[2],eb:r[3],ca:r[4],cb:r[5]}}
+async function newQ(){
+  if(sample){
+    try{
+      const r=await sample.json(`তুমি একটি হাস্যরসের গেম "Impossible Choice"-এর লেখক। বাংলায় দুটি একদম নতুন, অদ্ভুত, নির্দোষ ও হাস্যকর অপশন লেখো (প্রতিটি ১২ শব্দের মধ্যে), যেখানে দুটোই সমান বিদঘুটে। এগুলো আগেরগুলোর মতো যেন না হয়: ${seen.slice(-6).join(' ; ')||'কিছু নেই'}। শুধু JSON দাও: {"a":"...","ea":"একটি ইমোজি","b":"...","eb":"একটি ইমোজি"}`,{modelTier:'quick',cache:false});
+      if(r&&r.a&&r.b){seen.push(r.a,r.b);return r}
+    }catch(e){if(e&&e.code==='not_granted')sample=null}
+  }
+  return fromBank();
+}
+async function consequence(q,pick){
+  const chosen=pick==='a'?q.a:q.b,other=pick==='a'?q.b:q.a;
+  if(sample&&!q.ca){
+    try{
+      const r=await sample.json(`খেলোয়াড় বেছে নিয়েছে: "${chosen}" (অন্যটি ছিল: "${other}")। এই সিদ্ধান্তের একটি অতিরঞ্জিত, মজার, নির্দোষ পরিণতি বাংলায় ২-৩ বাক্যে লেখো। শুধু JSON: {"text":"...","emoji":"একটি ইমোজি","score":১ থেকে ৩০ এর মধ্যে সংখ্যা (কত মজার)}`,{modelTier:'quick',cache:false});
+      if(r&&r.text)return{text:r.text,emoji:r.emoji||'🤣',score:Math.max(1,Math.min(30,+r.score||12))};
+    }catch(e){}
+  }
+  return{text:(pick==='a'?q.ca:q.cb)||`তুমি "${chosen}" বেছে নিয়ে এমন কাণ্ড করলে যে পাড়ার লোক এখনো হাসতে হাসতে চোখ মুছছে!`,emoji:pick==='a'?q.ea:q.eb,score:8+Math.floor(Math.random()*18)};
+}
+
+/* ---------- রেন্ডার ---------- */
+function qHTML(q,ns){return `<div class="card" id="${ns}card"><p class="q">কোনটা বাছবে? 🤔</p>
+ <div class="opts"><button class="opt oa" data-p="a"><span class="e">${esc(q.ea||'🤪')}</span>${esc(q.a)}</button>
+ <div class="or">— নাকি —</div>
+ <button class="opt ob" data-p="b"><span class="e">${esc(q.eb||'🤪')}</span>${esc(q.b)}</button></div>
+ <div id="${ns}res"></div></div>`}
+async function show(ns,q,daily){
+  cur=q;const box=$('#t-'+ns);box.innerHTML=qHTML(q,ns);
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(ns,b.dataset.p,daily));
+  if(ns==='play'){
+    box.insertAdjacentHTML('beforeend','<div class="row"><button class="btn alt" id="skip">🔄 নতুন পরিস্থিতি</button></div>');
+    $('#skip').onclick=async e=>{e.target.disabled=true;e.target.textContent='AI ভাবছে…';show('play',await newQ())};
+  }
+}
+function rain(list){for(let i=0;i<18;i++){const s=document.createElement('span');s.className='rain';s.textContent=list[i%list.length];
+  s.style.left=Math.random()*95+'vw';s.style.animationDuration=(1.6+Math.random()*1.6)+'s';s.style.animationDelay=Math.random()*.5+'s';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),4000)}}
+async function choose(ns,p,daily){
+  const q=cur,card=$('#'+ns+'card');
+  card.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  card.classList.remove(...ANIMS);void card.offsetWidth;card.classList.add(ANIMS[Math.floor(Math.random()*4)]);
+  const res=$('#'+ns+'res');res.innerHTML='<div class="res"><p>⏳ পরিণতি তৈরি হচ্ছে…</p></div>';
+  const r=await consequence(q,p);
+  rain([q.ea||'🎉',q.eb||'😂',r.emoji,...EM.slice(0,4)]);
+  let bonus=0;
+  if(daily&&S.daily!==today()){bonus=20;S.daily=today()}
+  S.score+=r.score+bonus;S.played++;S.streak++;save();
+  const id=qid(q.a,q.b);myDoc.choices[id]=p;pushDocs(true);
+  res.innerHTML=`<div class="res pop"><div class="big">${esc(r.emoji)}</div><p>${esc(r.text)}</p>
+   <p><b>😂 +${r.score}${bonus?' (+'+bonus+' দৈনিক বোনাস!)':''}</b></p>
+   <div class="row"><button class="btn" id="${ns}sh">📤 বন্ধুকে শেয়ার</button>
+   ${ns==='play'?'<button class="btn alt" id="nx">➡️ পরের প্রশ্ন</button>':''}</div><p class="small" id="${ns}msg"></p></div>`;
+  $('#'+ns+'sh').onclick=()=>share(ns,q,p,r);
+  if($('#nx'))$('#nx').onclick=async e=>{e.target.disabled=true;show('play',await newQ())};
+}
+async function share(ns,q,p,r){
+  const t=`🤪 Impossible Choice!\n${q.a}\n— নাকি —\n${q.b}\n\nআমি বেছেছি: ${p==='a'?q.a:q.b}\n${r.emoji} ${r.text}\n\nতুমি কোনটা বাছবে? 😂`;
+  try{if(navigator.share){await navigator.share({text:t});return}}catch(e){}
+  try{await navigator.clipboard.writeText(t);$('#'+ns+'msg').textContent='✅ কপি হয়েছে! বন্ধুকে পাঠিয়ে দাও।'}catch(e){$('#'+ns+'msg').textContent=t}
+}
+const today=()=>new Date().toISOString().slice(0,10);
+function renderDaily(){
+  const d=Math.floor(Date.now()/864e5),r=BANK[d%BANK.length];
+  const done=S.daily===today();
+  const q={a:r[0],ea:r[1],b:r[2],eb:r[3],ca:r[4],cb:r[5]};
+  show('daily',q,true);
+  $('#t-daily').insertAdjacentHTML('afterbegin',`<div class="card"><b>📅 আজকের চ্যালেঞ্জ</b><p class="small">${done?'✅ আজকের বোনাস নেওয়া হয়ে গেছে। কাল আবার এসো!':'আজকের প্রশ্নে খেললে পাবে +২০ বোনাস স্কোর!'}</p></div>`);
+}
+
+/* ---------- নিজের প্রশ্ন ---------- */
+$('#mplay').onclick=()=>{const a=$('#ma').value.trim(),b=$('#mb').value.trim();
+  if(!a||!b){$('#mmsg').textContent='দুটো অপশনই লেখো!';return}
+  document.querySelector('[data-t=play]').click();show('play',{a,b,ea:'🤔',eb:'🤪'})};
+$('#mpub').onclick=()=>{const a=$('#ma').value.trim(),b=$('#mb').value.trim();
+  if(!a||!b){$('#mmsg').textContent='দুটো অপশনই লেখো!';return}
+  if(!db){$('#mmsg').textContent='সবার জন্য দিতে হলে সাইন-ইন করা দরকার।';return}
+  myDoc.custom=[{id:qid(a,b),a,b},...myDoc.custom].slice(0,5);pushDocs();
+  $('#mmsg').textContent='✅ তোমার প্রশ্ন ভোট ট্যাবে সবার জন্য দেওয়া হয়েছে!';$('#ma').value=$('#mb').value=''};
+
+/* ---------- ভোট ---------- */
+function tally(id){let a=0,b=0;allVotes.forEach(d=>{const c=(d.choices||{})[id];if(c==='a')a++;else if(c==='b')b++});return{a,b}}
+function voteCard(q){const id=qid(q.a,q.b),t=tally(id),n=t.a+t.b,pa=n?Math.round(t.a/n*100):50,mine=myDoc.choices[id];
+  return `<div class="card"><p class="q">${esc(q.a)} <span class="small">নাকি</span> ${esc(q.b)}</p>
+  <div class="bar"><i class="ba" style="width:${pa}%">${n?pa+'%':''}</i><i class="bb" style="width:${100-pa}%">${n?(100-pa)+'%':''}</i></div>
+  <div class="small" style="text-align:center">মোট ভোট: ${n}${mine?' · তোমার ভোট: '+(mine==='a'?'১ম':'২য়'):''}</div>
+  <div class="row"><button class="btn" data-v="${id}:a" style="background:var(--a);color:#fff">১ম</button><button class="btn" data-v="${id}:b" style="background:var(--b);color:#fff">২য়</button></div></div>`}
+function renderVote(){
+  const list=[];
+  allVotes.forEach(d=>(d.custom||[]).forEach(c=>{if(!list.find(x=>x.id===c.id))list.push(c)}));
+  const qs=[...list.map(c=>({a:c.a,b:c.b})),...BANK.slice(0,4).map(r=>({a:r[0],b:r[2]}))];
+  $('#votebox').innerHTML=(db?'':'<div class="card small">ভোট দিতে সাইন-ইন দরকার। এখন শুধু দেখতে পারছ না।</div>')+
+    '<p class="small" style="text-align:center">🗳️ সবার ভোটে কোনটা এগিয়ে? বন্ধুদের সাথে মিলিয়ে দেখো!</p>'+qs.map(voteCard).join('');
+  $('#votebox').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{if(!db)return;const[id,p]=b.dataset.v.split(':');
+    myDoc.choices[id]=p;pushDocs();});
+}
+
+/* ---------- লিডারবোর্ড ---------- */
+function renderBoard(){
+  $('#nm').value=S.name||'';
+  const arr=[...allScores].sort((x,y)=>(y.score||0)-(x.score||0)).slice(0,15);
+  $('#lbox').innerHTML=(arr.length?arr.map((d,i)=>`<div class="lb ${d._id===uid?'me':''}"><span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${esc(d.name||'নামহীন')}</span><span>😂 ${d.score||0}</span></div>`).join(''):'এখনো কেউ নেই। প্রথম হও!')
+   +(db?'':'<p>(লিডারবোর্ডে নাম তুলতে সাইন-ইন দরকার)</p>');
+}
+$('#nm').oninput=e=>{S.name=e.target.value.slice(0,20);save();pushDocs(true)};
+
+/* ---------- ডেটাবেস ---------- */
+let pt=null;
+function pushDocs(scoreToo){
+  if(!db||!uid)return;clearTimeout(pt);
+  pt=setTimeout(async()=>{try{
+    myDoc.name=S.name||'নামহীন';
+    await db.collection('votes').doc(uid).set(myDoc);
+    await db.collection('scores').doc(uid).set({name:S.name||'নামহীন',score:S.score});
+  }catch(e){}},700);
+}
+async function initDb(){
+  try{
+    const user=await claude.use('user');db=await claude.use('db');
+    if(!db||!user)return;uid=await user.id();
+    try{const s=await db.collection('votes').doc(uid).get();const d=s.data&&s.data();if(d){myDoc={name:'',choices:{},custom:[],...d}}}catch(e){}
+    db.collection('votes').onSnapshot(s=>{allVotes=s.docs.map(x=>x.data());if(!$('#t-vote').classList.contains('hide'))renderVote()},()=>{});
+    db.collection('scores').onSnapshot(s=>{allScores=s.docs.map(x=>({...x.data(),_id:x.id}));if(!$('#t-board').classList.contains('hide'))renderBoard()},()=>{});
+  }catch(e){db=null}
+}
+(async()=>{try{sample=await claude.use('sample')}catch(e){}})();
+initDb();
+save();
+show('play',fromBank());
+</script>
+</body>
+</html>
